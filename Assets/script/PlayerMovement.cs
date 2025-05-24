@@ -1,75 +1,74 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Movement Settings")]
-    public float moveSpeed = 5f;
+    public bool FacingLeft { get { return facingLeft; } set { facingLeft = value; } }
 
+    [SerializeField] private float moveSpeed = 1f;
+    private PlayerController playerControl;  // Ini script auto-generated dari Input Action
+    private Vector2 movement;
     private Rigidbody2D rb;
-    private Animator anim;
-    private SpriteRenderer sprite;
 
-    private PlayerController inputActions;
-    private Vector2 moveInput;
+    private Animator anim;
+    public SpriteRenderer sprite;
+    private bool facingLeft = false;
 
     private void Awake()
     {
+        playerControl = new PlayerController();  // pastikan nama sesuai file yang digenerate
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
-
-        inputActions = new PlayerController();
     }
 
     private void OnEnable()
     {
-        inputActions.Enable();
-        inputActions.movement.movement.performed += OnMovePerformed;
-        inputActions.movement.movement.canceled += OnMoveCanceled;
+        playerControl.Enable();
     }
 
     private void OnDisable()
     {
-        inputActions.movement.movement.performed -= OnMovePerformed;
-        inputActions.movement.movement.canceled -= OnMoveCanceled;
-        inputActions.Disable();
-    }
-
-    private void OnMovePerformed(InputAction.CallbackContext context)
-    {
-        moveInput = context.ReadValue<Vector2>();
-    }
-
-    private void OnMoveCanceled(InputAction.CallbackContext context)
-    {
-        moveInput = Vector2.zero;
-    }
-
-    private void FixedUpdate()
-    {
-        rb.velocity = new Vector2(moveInput.x * moveSpeed, moveInput.y * moveSpeed);
+        playerControl.Disable();
     }
 
     private void Update()
     {
-        UpdateAnimation();
+        PlayerInput();
     }
 
-    private void UpdateAnimation()
+    private void FixedUpdate()
     {
-        int state;
+        AdjustPlayerFacingDirection();
+        Move();
+    }
 
-        if (Mathf.Abs(moveInput.x) > 0.01f)
-        {
-            state = 1; // Run
-            sprite.flipX = moveInput.x < 0;
-        }
-        else
-        {
-            state = 0; // Idle
-        }
+    private void PlayerInput()
+    {
+        // Ambil input movement dari Input System baru
+        movement = playerControl.Movement.Movement.ReadValue<Vector2>();
 
-        anim.SetInteger("state", state);
+        anim.SetFloat("MoveX", movement.x);
+        anim.SetFloat("MoveY", movement.y);
+    }
+
+    private void Move()
+    {
+        rb.MovePosition(rb.position + movement * (moveSpeed * Time.fixedDeltaTime));
+    }
+
+    private void AdjustPlayerFacingDirection()
+    {
+        if (movement.x != 0f)
+        {
+            sprite.flipX = movement.x < 0f;
+            FacingLeft = true;
+        }
+        else if (movement.y != 0f)
+        {
+            sprite.flipX = false;
+            FacingLeft = false;
+        }
     }
 }

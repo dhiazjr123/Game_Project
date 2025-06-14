@@ -1,19 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro; // Jangan lupa pakai ini kalau pakai TextMeshProUGUI
 
 public class PlayerMovement : MonoBehaviour
 {
     public bool FacingLeft { get { return facingLeft; } set { facingLeft = value; } }
 
     [SerializeField] private float moveSpeed = 1f;
-    private PlayerController playerControl;  // Ini script auto-generated dari Input Action
+    private PlayerController playerControl;  // Script auto-generated dari Input Action
     private Vector2 movement;
     private Rigidbody2D rb;
 
     private Animator anim;
     public SpriteRenderer sprite;
     private bool facingLeft = false;
+
+    [Header("Coin System")]
+    public int currentCoin = 0;
+    public TextMeshProUGUI coinText;
 
     private void Awake()
     {
@@ -70,5 +75,13 @@ public class PlayerMovement : MonoBehaviour
             sprite.flipX = false;
             FacingLeft = false;
         }
+    }
+
+    // Fungsi untuk menambah koin
+    public void AddCoin(int amount)
+    {
+        currentCoin += amount;
+        if (coinText != null)
+            coinText.text = "Poin : " + currentCoin.ToString();
     }
 }

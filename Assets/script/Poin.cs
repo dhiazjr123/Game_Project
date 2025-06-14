@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Poin : MonoBehaviour
+public class Koin : MonoBehaviour
 {
     public int coinValue = 1;
 

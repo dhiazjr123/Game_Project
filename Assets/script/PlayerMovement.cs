@@ -80,8 +80,13 @@ public class PlayerMovement : MonoBehaviour
     // Fungsi untuk menambah koin
     public void AddCoin(int amount)
     {
+        int before = currentCoin;
         currentCoin += amount;
+
+        Debug.Log($"Coin sebelum: {before}, ditambah {amount}, sekarang: {currentCoin}");
+
         if (coinText != null)
             coinText.text = "Poin : " + currentCoin.ToString();
     }
+
 }

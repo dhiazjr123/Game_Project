@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 2854266293556293166}
   - component: {fileID: 2808923604008684670}
   - component: {fileID: 8565163543785597047}
-  - component: {fileID: 732008405075663255}
+  - component: {fileID: 5806156171131464181}
   m_Layer: 0
   m_Name: PadiMuda
-  m_TagString: Untagged
+  m_TagString: PadiMuda
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -112,7 +112,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.68, y: 1.21}
   m_EdgeRadius: 0
---- !u!114 &732008405075663255
+--- !u!114 &5806156171131464181
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,8 +121,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8247134906978975708}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99a18fc4176371d458d225fd8fd341c4, type: 3}
+  m_Script: {fileID: 11500000, guid: 2a833435ab76dd4489b7163a6f0c5f17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabPadiMatang: {fileID: 0}
-  waktuTumbuh: 8
+  prefabMatang: {fileID: 6940980925822729244, guid: e3cffd468073d8048a9aa5e2c2f164d1, type: 3}
